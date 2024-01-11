@@ -92,7 +92,12 @@ app.post('/login', async (req, res) => {
         if (err1) throw err1;
         console.log(result1);
         if (result1.length > 0) {
-          res.json({username: username, referral_code: result1[0].referral_code, referral_marks: result1[0].referral_marks});
+          // get rank
+          sql = `Select count(*) as rank from sea_users where referral_marks > (select referral_marks from sea_users where id=${result1[0].id})`
+          connection.query(sql, (err1, result2) => {
+            return res.json({username: username, referral_code: result1[0].referral_code, referral_marks: result1[0].referral_marks, rank: result2[0].rank});
+          });
+
         } else {
           res.status(500).json("credentials are not correct");
         }
