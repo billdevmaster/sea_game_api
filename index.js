@@ -115,7 +115,7 @@ app.post('/saveSolanaAddress', async (req, res) => {
   const hashServer = hashString(input);
   let sql = "";
   if (hashServer == hash) {
-    sql = `UPDATE sea_users SET solana_address = ${address} WHERE id=${id}`;
+    sql = `UPDATE sea_users SET solana_address = '${address}' WHERE id=${id}`;
     try {
       connection.query(sql, (err, result) => {
         if (err) throw err;
@@ -138,7 +138,7 @@ app.post('/saveTwitterName', async (req, res) => {
   const hashServer = hashString(input);
   let sql = "";
   if (hashServer == hash) {
-    sql = `UPDATE sea_users SET twitter_username = ${username} WHERE id=${id}`;
+    sql = `UPDATE sea_users SET twitter_username = '${username}' WHERE id=${id}`;
     try {
       connection.query(sql, (err, result) => {
         if (err) throw err;
