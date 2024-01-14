@@ -85,7 +85,6 @@ app.post('/login', async (req, res) => {
   let sql = "";
   if (hashServer == hash) {
     // save 
-    console.log(crypto.createHash('md5').update(password).digest("hex"))
     sql = `SELECT * FROM sea_users WHERE username='${username}' and password='${crypto.createHash('md5').update(password).digest("hex")}'`;
     try {
       connection.query(sql, (err1, result1) => {
@@ -95,12 +94,54 @@ app.post('/login', async (req, res) => {
           // get rank
           sql = `Select count(*) as rank from sea_users where referral_marks > (select referral_marks from sea_users where id=${result1[0].id})`
           connection.query(sql, (err1, result2) => {
-            return res.json({username: username, referral_code: result1[0].referral_code, referral_marks: result1[0].referral_marks, rank: (result2[0].rank + 1)});
+            return res.json({username: username, referral_code: result1[0].referral_code, referral_marks: result1[0].referral_marks, rank: (result2[0].rank + 1), id: result1[0].id});
           });
 
         } else {
           res.status(500).json("credentials are not correct");
         }
+      });
+    } catch (e) {
+      res.status(500).json("DB operation is failed");
+    }
+  } else {
+    res.status(500).json("Hash is not correct");
+  }
+});
+
+app.post('/saveSolanaAddress', async (req, res) => {
+  const {hash, address, id} = req.query;
+  const input = id + address + "sea" + secretEncryptionKey;
+  const hashServer = hashString(input);
+  let sql = "";
+  if (hashServer == hash) {
+    sql = `UPDATE sea_users SET solana_address = ${address} WHERE id=${id}`;
+    try {
+      connection.query(sql, (err, result) => {
+        if (err) throw err;
+        console.log(result);
+        return res.json("success");
+      });
+    } catch (e) {
+      res.status(500).json("DB operation is failed");
+    }
+  } else {
+    res.status(500).json("Hash is not correct");
+  }
+});
+
+app.post('/saveTwitterName', async (req, res) => {
+  const {hash, username, id} = req.query;
+  const input = id + username + "sea" + secretEncryptionKey;
+  const hashServer = hashString(input);
+  let sql = "";
+  if (hashServer == hash) {
+    sql = `UPDATE sea_users SET twitter_username = ${username} WHERE id=${id}`;
+    try {
+      connection.query(sql, (err, result) => {
+        if (err) throw err;
+        console.log(result);
+        return res.json("success");
       });
     } catch (e) {
       res.status(500).json("DB operation is failed");
