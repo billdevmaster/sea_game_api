@@ -144,9 +144,11 @@ app.post('/saveTwitterName', async (req, res) => {
         return res.json("success");
       });
     } catch (e) {
+      console.log(e)
       res.status(500).json("DB operation is failed");
     }
   } else {
+    console.log("hash issue")
     res.status(500).json("Hash is not correct");
   }
 });
