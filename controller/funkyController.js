@@ -38,11 +38,13 @@ const register = async (req, res) => {
               res.json({success: "true"})
             });
           } catch (e) {
+          	console.log(e)
             res.status(500).json("DB operation is failed")
           }
         }
       });
     } catch (e) {
+    	console.log(e)
       res.status(500).json("DB operation is failed")
     }
   } else {
