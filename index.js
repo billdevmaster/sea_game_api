@@ -157,10 +157,10 @@ app.post('/saveTwitterName', async (req, res) => {
   }
 });
 
-app.post('/funky/register', FunkyController.register);
-app.post('/funky/login', FunkyController.login);
-app.post('/funky/saveSolanaAddress', FunkyController.saveSolanaAddress);
-app.post('/funky/saveTwitterName', FunkyController.saveTwitterName);
+app.post('/funky/register', async(req, res) => FunkyController.register(req, res, connection));
+app.post('/funky/login', async(req, res) => FunkyController.login(req, res, connection));
+app.post('/funky/saveSolanaAddress', async(req, res) => FunkyController.saveSolanaAddress(req, res, connection));
+app.post('/funky/saveTwitterName', async(req, res) => FunkyController.saveTwitterName(req, res, connection));
 
 // Start the server
 app.listen(process.env.PORT, () => {

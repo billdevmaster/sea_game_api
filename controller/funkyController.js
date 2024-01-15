@@ -1,7 +1,7 @@
 const utils = require("../utils.js");
 const secretEncryptionKey = process.env.secretKey;
 
-const register = async (req, res) => {
+const register = async (req, res, connection) => {
 	const {hash, username, password, referral_code} = req.query;
   const input = username + password + "sea" + secretEncryptionKey;
   const hashServer = utils.hashString(input);
@@ -52,7 +52,7 @@ const register = async (req, res) => {
   }
 }
 
-const login = async (req, res) => {
+const login = async (req, res, connection) => {
 	const {hash, username, password} = req.query;
   const input = username + password + "sea" + secretEncryptionKey;
   const hashServer = utils.hashString(input);
@@ -83,7 +83,7 @@ const login = async (req, res) => {
   }
 }
 
-const saveSolanaAddress = async (req, res) => {
+const saveSolanaAddress = async (req, res, connection) => {
 	const {hash, address, id} = req.query;
   const input = id + address + "sea" + secretEncryptionKey;
   const hashServer = utils.hashString(input);
@@ -106,7 +106,7 @@ const saveSolanaAddress = async (req, res) => {
   }
 }
 
-const saveTwitterName = async (req, res) => {
+const saveTwitterName = async (req, res, connection) => {
 	const {hash, username, id} = req.query;
   const input = id + username + "sea" + secretEncryptionKey;
   const hashServer = utils.hashString(input);
