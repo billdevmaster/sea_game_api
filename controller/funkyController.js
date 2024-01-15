@@ -1,3 +1,5 @@
+const secretEncryptionKey = process.env.secretKey;
+
 const register = async (req, res) => {
 	const {hash, username, password, referral_code} = req.query;
   const input = username + password + "sea" + secretEncryptionKey;
