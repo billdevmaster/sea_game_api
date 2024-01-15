@@ -1,9 +1,10 @@
+const utils = require("../utils.js");
 const secretEncryptionKey = process.env.secretKey;
 
 const register = async (req, res) => {
 	const {hash, username, password, referral_code} = req.query;
   const input = username + password + "sea" + secretEncryptionKey;
-  const hashServer = hashString(input);
+  const hashServer = utils.hashString(input);
   let sql = "";
   if (hashServer == hash) {
     // save 
@@ -52,7 +53,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
 	const {hash, username, password} = req.query;
   const input = username + password + "sea" + secretEncryptionKey;
-  const hashServer = hashString(input);
+  const hashServer = utils.hashString(input);
   let sql = "";
   if (hashServer == hash) {
     // save 
@@ -83,7 +84,7 @@ const login = async (req, res) => {
 const saveSolanaAddress = async (req, res) => {
 	const {hash, address, id} = req.query;
   const input = id + address + "sea" + secretEncryptionKey;
-  const hashServer = hashString(input);
+  const hashServer = utils.hashString(input);
   let sql = "";
   if (hashServer == hash) {
     sql = `UPDATE funky_users SET solana_address = '${address}' WHERE id=${id}`;
@@ -106,7 +107,7 @@ const saveSolanaAddress = async (req, res) => {
 const saveTwitterName = async (req, res) => {
 	const {hash, username, id} = req.query;
   const input = id + username + "sea" + secretEncryptionKey;
-  const hashServer = hashString(input);
+  const hashServer = utils.hashString(input);
   let sql = "";
   if (hashServer == hash) {
     sql = `UPDATE funky_users SET twitter_username = '${username}' WHERE id=${id}`;
