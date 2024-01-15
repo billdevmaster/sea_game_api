@@ -1,4 +1,5 @@
 const utils = require("../utils.js");
+const shortid = require('shortid');
 const secretEncryptionKey = process.env.secretKey;
 
 const register = async (req, res, connection) => {
