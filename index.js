@@ -10,6 +10,7 @@ const app = express();
 
 const FunkyController = require("./controller/funkyController.js");
 const AmmoArcadeController = require("./controller/ammoArcadeController.js");
+const AmmoArcadeSolController = require("./controller/ammoArcSolController.js");
 
 const secretEncryptionKey = process.env.secretKey;
 const configuration = {
@@ -168,6 +169,10 @@ app.post('/funky/saveTwitterName', async(req, res) => FunkyController.saveTwitte
 // ammo arcade project
 app.post('/ammo_arcade/saveScore', async(req, res) => AmmoArcadeController.saveScore(req, res, connection));
 app.post('/ammo_arcade/getLeaderboard', async(req, res) => AmmoArcadeController.getLeaderboard(req, res, connection));
+
+// ammo arcade project
+app.post('/ammo_arcade_sol/saveScore', async(req, res) => AmmoArcadeSolController.saveScore(req, res, connection));
+app.post('/ammo_arcade_sol/getLeaderboard', async(req, res) => AmmoArcadeSolController.getLeaderboard(req, res, connection));
 
 // Start the server
 app.listen(process.env.PORT, () => {
